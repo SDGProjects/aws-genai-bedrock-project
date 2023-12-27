@@ -9,7 +9,7 @@ Use the Amazon Bedrock FMs to generate responses to user input.
 - [Python 3.10+](https://www.python.org/downloads/)
 - [Pip](https://pip.pypa.io/en/stable/installing/)
 - [AWS Account](https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/)
-- [Amazon Bedrock FM access](https://docs.aws.amazon.com/bedrock/latest/userguide/getting-started.html
+- [Amazon Bedrock foundation model access](https://docs.aws.amazon.com/bedrock/latest/userguide/getting-started.html)
 
 ## Getting Started
 
