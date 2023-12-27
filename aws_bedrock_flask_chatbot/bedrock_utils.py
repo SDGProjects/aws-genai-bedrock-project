@@ -80,12 +80,11 @@ def get_foundation_model_ids(client) -> list:
 
 
 def get_model_invoke_body(model_id: str, message: str) -> json:
-    invoke_body = None
     body_key = get_model_id_key(model_id)
     if body_key not in MODEL_INVOKE_BODY_MAP:
         raise ValueError(f"Model ID {model_id} not found in MODEL_INVOKE_BODY_MAP")
 
-    invoke_body = MODEL_INVOKE_BODY_MAP.get(body_key)
+    invoke_body = dict(MODEL_INVOKE_BODY_MAP[body_key])
     if "prompt" in invoke_body:
         invoke_body["prompt"] = invoke_body["prompt"].replace("${{message}}", message)
     elif "inputText" in invoke_body:
