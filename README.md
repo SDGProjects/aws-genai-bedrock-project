@@ -2,6 +2,8 @@
 
 Use the Amazon Bedrock FMs to generate responses to user input.
 
+![Amazon Bedrock Flask Chatbot](images/amazon-bedrock-flask-chatbot.png)
+
 ## Pre-requisites
 
 - [Python 3.10+](https://www.python.org/downloads/)
