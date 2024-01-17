@@ -138,7 +138,7 @@
           $("#list-group").append(chatbotThinking);
 
           $.ajax({
-            url: "/get_bedrock_response",
+            url: "/get_bedrock_rag_response",
             type: "get",
             data: {
               "chat_input_val": chatInputVal,

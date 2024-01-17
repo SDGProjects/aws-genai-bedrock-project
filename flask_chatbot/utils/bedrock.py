@@ -1,3 +1,4 @@
+import boto3
 import json
 
 from loguru import logger as log
@@ -64,6 +65,22 @@ MODEL_INVOKE_BODY_MAP = {
 }
 
 
+def get_bedrock_client(region: str):
+    return boto3.client("bedrock", region_name=region)
+
+
+def get_bedrock_runtime_client(region: str):
+    return boto3.client("bedrock-runtime", region_name=region)
+
+
+def get_bedrock_agent_client(region: str):
+    return boto3.client("bedrock-agent", region_name=region)
+
+
+def get_bedrock_agent_runtime_client(region: str):
+    return boto3.client("bedrock-agent-runtime", region_name=region)
+
+
 def get_model_id_key(model_id: str) -> str:
     return model_id.split("-")[0]
 
@@ -94,13 +111,13 @@ def get_model_invoke_body(model_id: str, message: str) -> json:
     return json.dumps(invoke_body)
 
 
-def invoke_model(client_runtime, model_id: str, invoke_body: json) -> str:
+def invoke_model(client, model_id: str, invoke_body: json) -> str:
     """
     Invokes the specified model with the given input text
     """
     accept = "application/json"
     content_type = "application/json"
-    response = client_runtime.invoke_model(
+    response = client.invoke_model(
         modelId=model_id,
         body=invoke_body,
         accept=accept,
@@ -120,3 +137,44 @@ def invoke_model(client_runtime, model_id: str, invoke_body: json) -> str:
     if model_key == "meta.llama2":
         return response_body["generation"]
     return None
+
+
+def invoke_knowledge_base(client, prompt: str, kb_id: str, model_arn: str):
+    # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/bedrock-agent-runtime/client/retrieve_and_generate.html#AgentsforBedrockRuntime.Client.retrieve_and_generate
+    response = client.retrieve_and_generate(
+        input={"text": prompt},
+        retrieveAndGenerateConfiguration={
+            "type": "KNOWLEDGE_BASE",
+            "knowledgeBaseConfiguration": {
+                "knowledgeBaseId": kb_id,
+                "modelArn": model_arn,
+            },
+        },
+    )
+    return response
+
+
+def get_knowledge_base_id(client, name: str) -> str:
+    knowledge_bases = client.list_knowledge_bases()["knowledgeBaseSummaries"]
+    if not knowledge_bases:
+        log.error("No knowledge bases found")
+        return ""
+
+    knowledge_base_id = ""
+    for kb in knowledge_bases:
+        if kb["name"] == name:
+            knowledge_base_id = kb["knowledgeBaseId"]
+            break
+    if not knowledge_base_id:
+        log.error(f"Knowledge base '{name}' not found in {knowledge_bases}")
+
+    log.info(f"Knowledge base ID: {knowledge_base_id}")
+    return knowledge_base_id
+
+
+def get_knowledge_base_config(client, knowledge_base_id: str) -> dict:
+    response = client.get_knowledge_base(knowledgeBaseId=knowledge_base_id)
+    return {
+        "knowledgeBaseId": knowledge_base_id,
+        "modelArn": response["knowledgeBase"]["knowledgeBaseArn"],
+    }
