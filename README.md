@@ -21,7 +21,7 @@ Use the Amazon Bedrock FMs to generate responses to user input based on Retrieva
 
 1. Clone or fork this repo and `cd` into the project directory
    ```bash
-   git clone https://github.com/SDGProjects/amazon-bedrock-flask-chatbot-with-rag.git
+   git clone https://github.com/cxmiller21/aws-bedrock-flask-chatbot.git
    ```
 2. Copy your PDF, Text, CSV, or JSON files to the `rag_data` directory (These files will be uploaded to Amazon S3 with Terraform in the next step)
 2. Create Terraform AWS IAM and S3 resources
