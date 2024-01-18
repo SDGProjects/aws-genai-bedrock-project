@@ -7,8 +7,6 @@ from loguru import logger as log
 AWS_REGION = "us-east-1"
 KB_NAME = "demo-rag"
 KB_DESCRIPTION = "Demo knowledge base for RAG"
-KB_BUCKET_NAME = "amazon-bedrock-knowledge-base-7653d441"
-KB_BUCKET_ARN = f"arn:aws:s3:::{KB_BUCKET_NAME}"
 BEDROCK_FM = "amazon.titan-embed-text-v1"
 BEDROCK_EMBED_MODEL_ARN = f"arn:aws:bedrock:{AWS_REGION}::foundation-model/{BEDROCK_FM}"
 OS_COLLECTION_NAME = f"{KB_NAME}-os-collection"
@@ -19,6 +17,15 @@ OS_POLICY_NAME = "bedrock-security-policy"
 KB_ROLE_NAME = "AmazonBedrockExecutionRoleForKnowledgeBase_Default"
 
 
+def get_bedrock_s3_bucket_name() -> str:
+  client = boto3.client("s3")
+  response = client.list_buckets()
+  for bucket in response["Buckets"]:
+    if bucket["Name"].startswith("amazon-bedrock-knowledge-base"):
+      return bucket["Name"]
+  return ""
+
+
 def get_aws_iam_role_arn(name: str) -> str:
     client = boto3.client("iam")
     response = client.get_role(RoleName=name)
@@ -27,12 +34,14 @@ def get_aws_iam_role_arn(name: str) -> str:
 
 def get_shared_consts() -> dict:
     kb_role_arn = get_aws_iam_role_arn(KB_ROLE_NAME)
+    kb_bucket_name = get_bedrock_s3_bucket_name()
+    kb_bucket_arn = f"arn:aws:s3:::{kb_bucket_name}"
     return {
         "AWS_REGION": AWS_REGION,
         "KB_NAME": KB_NAME,
         "KB_DESCRIPTION": KB_DESCRIPTION,
-        "KB_BUCKET_NAME": KB_BUCKET_NAME,
-        "KB_BUCKET_ARN": KB_BUCKET_ARN,
+        "KB_BUCKET_NAME": kb_bucket_name,
+        "KB_BUCKET_ARN": kb_bucket_arn,
         "BEDROCK_FM": BEDROCK_FM,
         "BEDROCK_EMBED_MODEL_ARN": BEDROCK_EMBED_MODEL_ARN,
         "OS_COLLECTION_NAME": OS_COLLECTION_NAME,

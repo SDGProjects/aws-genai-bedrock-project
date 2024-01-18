@@ -261,7 +261,7 @@ def ingest_data_source_into_knowledge_base(kb_id: str, data_source_id: str) -> N
         bedrock_client.get_ingestion_job,
         ["ingestionJob", "status"],
         "COMPLETE",
-        500,
+        700,
         knowledgeBaseId=kb_id,
         dataSourceId=data_source_id,
         ingestionJobId=data["ingestionJobId"],
@@ -275,15 +275,15 @@ def main():
     create_opensearch_network_security_policy(OS_POLICY_NAME)
     log.success("Created OpenSearch Security Policies!")
 
-    log.info("Creating OpenSearchServerless Collection...")
     collection_data = utils.get_opensearch_collection(os_client, OS_COLLECTION_NAME)
     if not collection_data:
         log.info("Collection not found... Creating it now")
         create_opensearch_collection()
         collection_data = utils.get_opensearch_collection(os_client, OS_COLLECTION_NAME)
-    index_opensearch_collection_data(collection_data["host"])
-    log.info("Waiting for index to be created...")
-    time.sleep(30)
+
+        index_opensearch_collection_data(collection_data["host"])
+        log.info("Waiting for index to be created...")
+        time.sleep(30)
 
     log.info(f"Collection Host: {collection_data['host']}")
     log.info(f"Collection ARN: {collection_data['arn']}")
