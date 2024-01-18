@@ -18,12 +18,12 @@ KB_ROLE_NAME = "AmazonBedrockExecutionRoleForKnowledgeBase_Default"
 
 
 def get_bedrock_s3_bucket_name() -> str:
-  client = boto3.client("s3")
-  response = client.list_buckets()
-  for bucket in response["Buckets"]:
-    if bucket["Name"].startswith("amazon-bedrock-knowledge-base"):
-      return bucket["Name"]
-  return ""
+    client = boto3.client("s3")
+    response = client.list_buckets()
+    for bucket in response["Buckets"]:
+        if bucket["Name"].startswith("amazon-bedrock-knowledge-base"):
+            return bucket["Name"]
+    return ""
 
 
 def get_aws_iam_role_arn(name: str) -> str:
