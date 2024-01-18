@@ -13,6 +13,9 @@ Use the Amazon Bedrock FMs to generate responses to user input based on Retrieva
 
 ## Notes
 
+- There might be issues with the `create_knowledge_base.py` and `delete_knowledge_base.py` scripts.
+  - The Bedrock API's don't seem 100% stable yet
+  - The scripts aren't
 - Terraform and CloudFormation Amazon Bedrock resources are not available as of 1/16/24. I've created Python scripts that leverage Boto3 to create and delete the missing AWS resources
   - create_knowledge_base.py
   - delete_knowledge_base.py
@@ -53,6 +56,24 @@ Use the Amazon Bedrock FMs to generate responses to user input based on Retrieva
    ```
 6. Open a browser and navigate to `http://localhost:5100`
 7. Ask the chatbot a question based on the RAG data you uploaded and validate the response is relevant
+
+## Cleanup
+
+1. Delete the Amazon Bedrock and AWS OpenSearch resources
+   ```bash
+   python delete_knowledge_base.py
+   ```
+2. Delete the Terraform AWS IAM and S3 resources
+   ```bash
+    cd terraform
+    terraform destroy
+    ```
+3. Spin down the Flask app
+   ```bash
+   # Press CTRL+C to stop the Flask app
+   # Deactivate the virtual environment
+   deactivate
+   ```
 
 ## Acknowledgements
 
