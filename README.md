@@ -1,8 +1,8 @@
-# Amazon Bedrock RAG Python Flask Chatbot
+# SDG Amazon GenAI Bedrock Project
 
 Use the Amazon Bedrock FMs to generate responses to user input based on Retrieval Augmented Generation (RAG) data.
 
-![Amazon Bedrock Flask Chatbot](images/amazon-bedrock-flask-chatbot.png)
+![SDG Amazon GenAI Bedrock Project](images/aws-genai-bedrock-project-diagram.png)
 
 ## Pre-requisites
 
@@ -24,7 +24,7 @@ Use the Amazon Bedrock FMs to generate responses to user input based on Retrieva
 
 1. Clone or fork this repo and `cd` into the project directory
    ```bash
-   git clone https://github.com/cxmiller21/aws-bedrock-flask-chatbot.git
+   git clone https://github.com/SDGProjects/aws-genai-bedrock-project.git
    ```
 2. Copy your PDF, Text, CSV, or JSON files to the `rag_data` directory (These files will be uploaded to Amazon S3 with Terraform in the next step)
 2. Create Terraform AWS IAM and S3 resources
@@ -78,3 +78,16 @@ Use the Amazon Bedrock FMs to generate responses to user input based on Retrieva
 ## Acknowledgements
 
 Flask App foundation from [skolo-online's chat-gpt-starter repository](https://github.com/skolo-online/chat-gpt-starter)
+
+## TODO:
+
+- [ ] Rewrite Python app to NestJS or another frontend framework
+- [ ] Add logic to compile files and update Terraform to create the objects in the S3 bucket
+- [ ] Deploy and validate resources
+- [ ] Configure the AWS Lex bot Terraform resources
+  - [ ] IAM Role/Policy
+  - [ ] Lex Bot
+  - [ ] Lex Intent
+- [ ] Review Terraform AWS Bedrock resources available
+  - [ ] https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/bedrockagent_agent
+- [ ] Update README instructions with project specific create/delete instructions
