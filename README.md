@@ -82,8 +82,8 @@ Flask App foundation from [skolo-online's chat-gpt-starter repository](https://g
 ## TODO:
 
 - [ ] Rewrite Python app to NestJS or another frontend framework
-- [ ] Add logic to compile files and update Terraform to create the objects in the S3 bucket
-- [ ] Deploy and validate resources
+- [x] Add logic to compile files and update Terraform to create the objects in the S3 bucket
+- [x] Deploy and validate resources (CloudFront + S3 deployed)
 - [ ] Configure the AWS Lex bot Terraform resources
   - [ ] IAM Role/Policy
   - [ ] Lex Bot
@@ -91,3 +91,4 @@ Flask App foundation from [skolo-online's chat-gpt-starter repository](https://g
 - [ ] Review Terraform AWS Bedrock resources available
   - [ ] https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/bedrockagent_agent
 - [ ] Update README instructions with project specific create/delete instructions
+- [ ] Delete python scripts and files that are not needed/used
