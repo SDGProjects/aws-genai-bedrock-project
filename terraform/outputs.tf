@@ -1,7 +1,3 @@
-output "bedrock_execution_role_arn" {
-  value = aws_iam_role.bedrock_execution_role.arn
-}
-
 output "frontend_s3_bucket_name" {
   value = module.genai_frontend_s3_bucket.s3_bucket_id
 }

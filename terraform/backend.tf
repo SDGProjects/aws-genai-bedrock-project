@@ -2,9 +2,9 @@ terraform {
   required_version = ">= 1.5"
 
   backend "s3" {
-    bucket = "terraform-state-us-east-2-853297241922"
+    bucket = "terraform-state-us-east-1-853297241922"
     key    = "projects/aws-genai-bedrock-project/terraform.tfstate"
-    region = "us-east-2"
+    region = "us-east-1"
   }
 
   required_providers {
